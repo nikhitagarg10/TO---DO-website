@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\style.css">
+    <title>Todo</title>
+</head>
+<body>
+    <div class="main flex1">
+        <div class="second">
+            <div class="content">
+                <h2>What do you want to do Today</h2>
+
+                <div class="content1 flex1">
+                        <form action="{{url_for('main.add_item')}}" class="content2 flex1" method="POST">
+                            <input type="text" placeholder="Enter Todo" name="item">
+                            <button>ADD</button>
+                        </form>
+                </div>
+
+                <div class="flex1">
+                    <form action="{{url_for('main.delete_all')}}"  class="flex1 b1" method="POST">
+                        <button type="submit" class="delete" >DELETE ALL</button>
+                    </form>
+
+                    <form action="{{url_for('main.delete_completed')}}" class="flex1 b2" method="POST">
+                        <button type="submit" class="delete" >DELETE COMPLETED</button>
+                    </form>
+                </div>
+
+            </div>
+
+                <ul>
+                    {% for tasks in tasks %}
+                        <a href="{{ url_for('main.complete_todo' , oid=tasks._id)}}" class="todo">
+                            {% set class_name = "not_done" %}
+                            {% if tasks.status == True%}
+                                {% set class_name = "done" %}
+                            {% endif %}
+                            <li class="{{class_name}}"> 
+                                {{ tasks.task }}
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            
+        </div>
+    </div>
+</body>
+</html>
